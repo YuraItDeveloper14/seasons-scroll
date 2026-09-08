@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The house holds still. The year does not.</title>
+<meta name="description" content="One courtyard in a single continuous shot. Scroll, and twelve months pass through it: summer, autumn, winter, spring.">
+<meta name="theme-color" content="#0B0D0C">
+<meta property="og:title" content="The house holds still. The year does not.">
+<meta property="og:description" content="One courtyard, twelve months, one continuous shot.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/poster.jpg">
+
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMEIwRDBDIi8+PHJlY3QgeD0iNyIgeT0iNiIgd2lkdGg9IjQiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSIjOENBMzQ0Ii8+PHJlY3QgeD0iMTMiIHk9IjYiIHdpZHRoPSI0IiBoZWlnaHQ9IjIwIiByeD0iMiIgZmlsbD0iI0MwOEIzRSIvPjxyZWN0IHg9IjE5IiB5PSI2IiB3aWR0aD0iNCIgaGVpZ2h0PSIyMCIgcng9IjIiIGZpbGw9IiM4RkEzQUEiLz48cmVjdCB4PSIyNSIgeT0iNiIgd2lkdGg9IjIiIGhlaWdodD0iMjAiIHJ4PSIxIiBmaWxsPSIjRDc5RTg5Ii8+PC9zdmc+">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..500,0..100,0..1&family=Martian+Mono:wght@300;400&display=swap">
+
+<style>
+:root{
+  --ink:    #0B0D0C;
+  --light:  #FAF8F3;
+  --body:   rgba(250,248,243,.95);
+  --soft:   rgba(250,248,243,.68);
+  --faint:  rgba(250,248,243,.34);
+  --hair:   rgba(250,248,243,.20);
+
+  /* season accents, sampled from the film itself */
+  --s-summer: #8CA344;
+  --s-autumn: #C08B3E;
+  --s-winter: #8FA3AA;
+  --s-spring: #D79E89;
+  --accent:   var(--s-summer);
+
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --mono:    "Martian Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --ease:   cubic-bezier(.16,1,.3,1);
+  --gutter: clamp(1.4rem, 5.2vw, 6rem);
+  --rail:   clamp(3.5rem, 7vw, 7rem);
+
+  --scroll: 0;
+  --scrim:  .30;
+}
+
+*,*::before,*::after{ box-sizing:border-box }
+
+html{ background:var(--ink); -webkit-text-size-adjust:100% }
+body{
+  margin:0; background:var(--ink); color:var(--light);
+  font-family:var(--display); font-optical-sizing:auto;
+  font-variation-settings:"SOFT" 0,"WONK" 0;
+  font-synthesis-weight:none;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+
+/* ───────────────────────── the film ───────────────────────── */
+.stage{ position:fixed; inset:0; z-index:0; overflow:hidden; background:var(--ink) }
+
+#film{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:50% 42%;
+  background-image:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCAAXACgDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAMFBgT/xAAkEAACAgIBAwQDAAAAAAAAAAABAgADBBEFEiFBBiIxUSNhcf/EABcBAAMBAAAAAAAAAAAAAAAAAAECAwT/xAAbEQADAAIDAAAAAAAAAAAAAAAAAQIRMQMhMv/aAAwDAQACEQMRAD8Azoe2hgpMqYt4aokjZ137yUKw922ct/JW49FQfkTa/uZaqUKhPVS1hHUFbx3iMi1KkIbRJ8iUn41cy8GhAuvAjbfTbWDdjfHgR5avyLVqdmZqzApILdoSvncFiVVgden+jCTdSnhhTycfGslg6XX3CUmcVuE18whJci7COpybKW2jEGdlvN3LjMNDq12MISc3U6YGk9mTysi665mdiTv7hCE0in//2Q==');
+  background-size:cover; background-position:50% 42%;
+  opacity:0; transition:opacity 1.2s var(--ease);
+}
+body.is-ready #film{ opacity:1 }
+
+.scrim{ position:absolute; inset:0; pointer-events:none }
+.scrim--column{
+  background:linear-gradient(100deg,
+    rgba(11,13,12,calc(var(--scrim) * 1.10)) 0%,
+    rgba(11,13,12,calc(var(--scrim) * .94)) 22%,
+    rgba(11,13,12,calc(var(--scrim) * .62)) 48%,
+    rgba(11,13,12,calc(var(--scrim) * .24)) 74%,
+    rgba(11,13,12,calc(var(--scrim) * .10)) 100%);
+}
+.scrim--edges{
+  background:linear-gradient(180deg, rgba(11,13,12,.55) 0%, rgba(11,13,12,0) 22%,
+                                     rgba(11,13,12,0) 74%, rgba(11,13,12,.62) 100%);
+}
+
+/* ───────────────────────── loader ───────────────────────── */
+.boot{
+  position:fixed; inset:0; z-index:60; background:var(--ink);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:1.4rem; transition:opacity .9s var(--ease), visibility .9s;
+}
+body.is-ready .boot{ opacity:0; visibility:hidden }
+.boot__label{
+  font-family:var(--mono); font-size:.6rem; font-weight:300;
+  letter-spacing:.32em; text-transform:uppercase; color:var(--faint);
+}
+.boot__bar{ width:min(220px,44vw); height:1px; background:var(--hair); overflow:hidden }
+.boot__fill{
+  display:block; height:100%; width:0%; background:var(--light);
+  transition:width .45s var(--ease);
+}
+
+/* ───────────────────────── fixed chrome ───────────────────────── */
+.mark{
+  position:fixed; top:clamp(1.2rem,3vw,2.2rem); left:var(--gutter); z-index:40;
+  text-shadow:0 0 3px rgba(11,13,12,.95), 0 0 10px rgba(11,13,12,.8);
+  font-family:var(--mono); font-size:.58rem; font-weight:300;
+  letter-spacing:.3em; text-transform:uppercase; color:var(--soft);
+  pointer-events:none;
+}
+
+/* the year rule down the right edge */
+.rule{
+  position:fixed; z-index:40; right:calc(var(--gutter) * .62);
+  top:50%; transform:translateY(-50%);
+  width:var(--rail); height:min(62vh,560px);
+  display:flex; align-items:stretch; justify-content:flex-end;
+  pointer-events:none;
+  opacity:0; transition:opacity 1s var(--ease) .3s;
+}
+body.is-ready .rule{ opacity:1 }
+
+.rule__track{ position:relative; width:100%; height:100%;
+  filter:drop-shadow(0 1px 10px rgba(11,13,12,.85)) }
+.rule__spine{ position:absolute; right:0; top:0; bottom:0; width:1px; background:var(--hair) }
+.rule__band{ position:absolute; right:0; width:3px; border-radius:2px;
+  background:currentColor; opacity:.30 }
+.rule__month{
+  position:absolute; right:12px; transform:translateY(-50%);
+  font-family:var(--mono); font-size:.48rem; font-weight:300;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
+  white-space:nowrap; transition:color .5s var(--ease);
+}
+.rule__month.is-now{ color:var(--light) }
+.rule__tick{ position:absolute; right:0; width:6px; height:1px; background:var(--hair) }
+.rule__marker{
+  position:absolute; right:0; width:15px; height:1px; background:var(--accent);
+  transition:background .8s linear;
+}
+.rule__marker::after{
+  content:""; position:absolute; right:0; top:-2px;
+  width:5px; height:5px; border-radius:50%; background:var(--accent);
+  transition:background .8s linear;
+}
+.rule__season{
+  position:absolute; right:12px; bottom:-2.6rem;
+  font-family:var(--display); font-style:italic; font-weight:300;
+  font-variation-settings:"SOFT" 0,"WONK" 1;
+  font-size:1rem; color:var(--soft); white-space:nowrap;
+}
+
+/* ───────────────────────── chapters ───────────────────────── */
+#track{ position:relative; z-index:20 }
+
+.panel{
+  min-height:100svh; display:flex; align-items:center;
+  padding-inline:var(--gutter) calc(var(--rail) + var(--gutter));
+  padding-block:14vh;
+}
+.panel__inner{
+  max-width:min(46rem,64vw); position:relative;
+  opacity:var(--near,1);
+  transform:translateY(calc((1 - var(--near,1)) * 2.2rem));
+  will-change:opacity;
+}
+.panel__inner::before{
+  content:""; position:absolute; inset:-42% -46% -34% -34%;
+  z-index:-1; pointer-events:none;
+  /* the ellipse must reach zero exactly at the box edge, or the box shows
+     up as a rectangle over the film */
+  background:radial-gradient(50% 50% at 50% 50%,
+    rgba(11,13,12,calc(var(--scrim) * 1.34)) 0%,
+    rgba(11,13,12,calc(var(--scrim) * 1.05)) 34%,
+    rgba(11,13,12,calc(var(--scrim) * .52)) 66%,
+    rgba(11,13,12,0) 100%);
+}
+.hero .panel__inner{ max-width:min(52rem,72vw) }
+
+.eyebrow{
+  font-family:var(--mono); font-size:.58rem; font-weight:300;
+  letter-spacing:.26em; text-transform:uppercase; color:var(--body);
+  text-shadow:0 0 3px rgba(11,13,12,.95), 0 0 9px rgba(11,13,12,.85),
+              0 1px 16px rgba(11,13,12,.7);
+  margin:0 0 clamp(1.2rem,2.6vw,2rem);
+  display:flex; align-items:center; gap:.85em; flex-wrap:wrap;
+}
+.eyebrow__dot{
+  width:5px; height:5px; border-radius:50%; background:var(--accent);
+  flex:none; transition:background .8s linear;
+}
+.eyebrow__label{ min-width:0 }
+
+h1,h2{
+  font-family:var(--display); font-weight:300;
+  font-variation-settings:"SOFT" 0,"WONK" 1;
+  font-size:clamp(2.15rem, 7vw, 5.4rem); line-height:1.04;
+  letter-spacing:-.015em; margin:0 0 clamp(1.3rem,2.8vw,2.1rem);
+  text-wrap:balance;
+  text-shadow:0 1px 4px rgba(11,13,12,.4), 0 2px 46px rgba(11,13,12,.55);
+}
+h1 em,h2 em{ font-style:italic; font-weight:300; color:var(--light) }
+
+.lede{
+  font-family:var(--display); font-weight:400;
+  font-variation-settings:"SOFT" 0,"WONK" 0;
+  font-size:clamp(1rem,1.34vw,1.15rem); line-height:1.7;
+  color:var(--body); max-width:38rem; margin:0;
+  text-shadow:0 1px 2px rgba(11,13,12,.7), 0 1px 30px rgba(11,13,12,.65);
+}
+
+/* word-by-word rise */
+.w{ display:inline-block; overflow:hidden; vertical-align:bottom }
+.w > i{
+  display:inline-block; font-style:inherit;
+  transform:translateY(102%); opacity:0;
+  transition:transform 1.05s var(--ease), opacity 1.05s var(--ease);
+  transition-delay:calc(var(--i,0) * 52ms);
+}
+.is-in .w > i{ transform:translateY(0); opacity:1 }
+
+.lede,.eyebrow{
+  opacity:0; transform:translateY(14px);
+  transition:opacity .95s var(--ease) .22s, transform .95s var(--ease) .22s;
+}
+.is-in .lede,.is-in .eyebrow{ opacity:1; transform:none }
+
+.hint{
+  margin:clamp(2.4rem,5vw,4rem) 0 0;
+  font-family:var(--mono); font-size:.56rem; font-weight:300;
+  letter-spacing:.3em; text-transform:uppercase; color:var(--body);
+  text-shadow:0 0 3px rgba(11,13,12,.95), 0 0 9px rgba(11,13,12,.85);
+  display:flex; align-items:center; gap:.9em;
+  opacity:0; transition:opacity .9s var(--ease) .8s;
+}
+.is-in .hint{ opacity:1 }
+body.is-scrolled .hint{ opacity:0; transition-delay:0s }
+.hint__line{
+  display:block; width:44px; height:1px; background:var(--hair);
+  position:relative; overflow:hidden;
+}
+.hint__line::after{
+  content:""; position:absolute; inset:0; background:var(--light);
+  transform:translateX(-100%); animation:sweep 2.6s var(--ease) infinite;
+}
+@keyframes sweep{ 0%{transform:translateX(-100%)} 55%,100%{transform:translateX(100%)} }
+
+.colophon{
+  position:relative; z-index:20;
+  padding:0 var(--gutter) clamp(2rem,5vh,3.5rem);
+  font-family:var(--mono); font-size:.52rem; font-weight:300;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--faint);
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+}
+
+:focus-visible{ outline:1px solid var(--light); outline-offset:4px }
+
+/* ───────────────────────── responsive ───────────────────────── */
+@media (max-width:860px){
+  :root{ --rail:0px }
+  h1,h2{ font-size:clamp(2.05rem, 8.6vw, 3.3rem) }
+  .eyebrow{ letter-spacing:.2em; font-size:.55rem }
+  .panel{ padding-inline:var(--gutter); padding-block:15vh }
+  .panel__inner,.hero .panel__inner{ max-width:none }
+  .panel__inner::before{
+    inset:-26% -30%;
+    background:radial-gradient(50% 50% at 50% 50%,
+      rgba(11,13,12,calc(var(--scrim) * 1.24)) 0%,
+      rgba(11,13,12,calc(var(--scrim) * .96)) 36%,
+      rgba(11,13,12,calc(var(--scrim) * .48)) 68%,
+      rgba(11,13,12,0) 100%);
+  }
+  .rule{
+    top:auto; bottom:0; left:0; right:0; transform:none;
+    width:100%; height:auto; padding:0 var(--gutter) 1.1rem; display:block;
+  }
+  .rule__track{ height:26px }
+  .rule__spine{ right:0; left:0; top:auto; bottom:8px; width:auto; height:1px }
+  .rule__band{ top:auto; bottom:7px; height:3px; width:auto; border-radius:2px }
+  .rule__month,.rule__tick{ display:none }
+  .rule__marker{ top:auto; bottom:5px; right:auto; width:1px; height:7px }
+  .rule__marker::after{ top:-6px; right:-2px }
+  .rule__season{ right:auto; left:var(--gutter); bottom:14px; font-size:.9rem }
+  .scrim--column{
+    background:linear-gradient(180deg,
+      rgba(11,13,12,calc(var(--scrim) * 1.05)) 0%,
+      rgba(11,13,12,calc(var(--scrim) * .8)) 55%,
+      rgba(11,13,12,calc(var(--scrim) * 1.15)) 100%);
+  }
+}
+
+/* A cover-crop of a 16:9 courtyard on a portrait phone leaves a narrow
+   vertical slice, and the composition is the subject. Show the frame whole
+   as a band that fades into the ground, with the type below it. */
+@media (max-width:860px) and (orientation:portrait){
+  #film{
+    inset:auto 0 auto 0; top:14vh; height:auto;
+    aspect-ratio:16/9; object-fit:contain; object-position:50% 50%;
+    background-position:50% 50%;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 87%,transparent 100%);
+            mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 87%,transparent 100%);
+  }
+  .panel{ align-items:flex-end; padding-block:12vh 14vh }
+  .panel__inner::before{
+    inset:-28% -30%;
+    background:radial-gradient(50% 50% at 50% 50%,
+      rgba(11,13,12,calc(var(--scrim) * 1.10)) 0%,
+      rgba(11,13,12,calc(var(--scrim) * .84)) 38%,
+      rgba(11,13,12,calc(var(--scrim) * .42)) 70%,
+      rgba(11,13,12,0) 100%);
+  }
+  .scrim--column{
+    background:linear-gradient(180deg,
+      rgba(11,13,12,calc(var(--scrim) * .55)) 0%,
+      rgba(11,13,12,0) 30%,
+      rgba(11,13,12,calc(var(--scrim) * .40)) 62%,
+      rgba(11,13,12,calc(var(--scrim) * .85)) 100%);
+  }
+  .scrim--edges{ background:linear-gradient(180deg,
+      rgba(11,13,12,.5) 0%, rgba(11,13,12,0) 18%,
+      rgba(11,13,12,0) 70%, rgba(11,13,12,.55) 100%); }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .w > i{ transform:none; opacity:1; transition:none }
+  .lede,.eyebrow,.hint{ opacity:1; transform:none; transition:none }
+  .hint__line::after{ animation:none }
+  .panel__inner{ transform:none }
+  #film{ transition:none }
+}
+</style>
+</head>
+
+<body>
+
+<div class="boot" id="boot" role="status" aria-live="polite">
+  <span class="boot__label">Loading the year</span>
+  <span class="boot__bar"><b class="boot__fill" id="bootFill"></b></span>
+</div>
+
+<div class="stage" aria-hidden="true">
+  <video id="film" muted playsinline preload="auto" disablepictureinpicture
+         disableremoteplayback tabindex="-1"></video>
+  <div class="scrim scrim--column"></div>
+  <div class="scrim scrim--edges"></div>
+</div>
+
+<div class="mark">One courtyard · one year</div>
+
+<aside class="rule" id="rule" aria-hidden="true">
+  <div class="rule__track" id="ruleTrack">
+    <span class="rule__spine"></span>
+    <span class="rule__marker" id="ruleMarker"></span>
+    <span class="rule__season" id="ruleSeason">Summer</span>
+  </div>
+</aside>
+
+<main id="track">
+
+  <section class="panel hero">
+    <div class="panel__inner">
+      <p class="eyebrow"><span class="eyebrow__dot"></span><span class="eyebrow__label">One courtyard · twelve months</span></p>
+      <h1 data-split>The house holds still. <em>The year does not.</em></h1>
+      <p class="lede">A single continuous shot from one point. Scroll, and twelve months pass through it.</p>
+      <p class="hint"><span class="hint__line"></span>Scroll</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__inner">
+      <p class="eyebrow"><span class="eyebrow__dot"></span><span class="eyebrow__label">June – August · longest light</span></p>
+      <h2 data-split>The garden is <em>at full height</em></h2>
+      <p class="lede">The lawn is mown in stripes and keeps its colour until evening. The canopy has closed over, so the terrace stays in shade for most of the day. The pool is open and the water lies flat.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__inner">
+      <p class="eyebrow"><span class="eyebrow__dot"></span><span class="eyebrow__label">September – November · leaf fall</span></p>
+      <h2 data-split>The canopy <em>lets go</em></h2>
+      <p class="lede">One tree at the edge turns first and the rest follow over a few weeks. Leaves land on the water faster than anyone skims them off, and gold collects across the lawn. The grass is still green, but it is a duller green than in July.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__inner">
+      <p class="eyebrow"><span class="eyebrow__dot"></span><span class="eyebrow__label">December – February · snow cover</span></p>
+      <h2 data-split>Snow takes away <em>the edges</em></h2>
+      <p class="lede">The line between lawn and terrace disappears, and so does the one between path and border. The pool is covered and reads as a rectangle in a slightly different white. Only the house keeps its shape.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__inner">
+      <p class="eyebrow"><span class="eyebrow__dot"></span><span class="eyebrow__label">March – May · blossom</span></p>
+      <h2 data-split>Colour arrives <em>before the leaves</em></h2>
+      <p class="lede">Snow goes in patches: the lawn darkens first, then the terrace clears. Blossom opens on bare branches, pink before anything is green, and tulips come up along the border in pink and orange. These weeks read brighter than July.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <span id="filmStats">Scroll film</span>
+  <span>Fraunces &amp; Martian&nbsp;Mono</span>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  const film    = document.getElementById('film');
+  const track   = document.getElementById('track');
+  const boot    = document.getElementById('boot');
+  const fill    = document.getElementById('bootFill');
+  const marker  = document.getElementById('ruleMarker');
+  const rTrack  = document.getElementById('ruleTrack');
+  const rSeason = document.getElementById('ruleSeason');
+  const root    = document.documentElement;
+  const panels  = [...document.querySelectorAll('.panel')];
+  const calm    = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const clamp = (v,a=0,b=1) => v<a ? a : v>b ? b : v;
+  const lerp  = (a,b,t) => a + (b-a)*t;
+  const inv   = (a,b,v) => b===a ? 0 : clamp((v-a)/(b-a));
+
+  /* ── the film's own luminance, measured frame by frame ──────────
+     61 samples across the film, taken from the band where the type
+     sits. The scrim follows this curve, so the words keep the same
+     contrast over a dark lawn and over open snow.                  */
+  const LUMA = [.39,.394,.399,.402,.403,.405,.407,.408,.41,.413,.416,.419,
+    .422,.425,.428,.43,.435,.448,.458,.471,.477,.475,.473,.471,.471,.471,
+    .47,.47,.469,.469,.476,.521,.565,.612,.667,.669,.67,.67,.67,.669,.669,
+    .669,.667,.666,.666,.665,.661,.647,.62,.587,.547,.498,.466,.47,.473,
+    .475,.471,.471,.465,.464,.464];
+
+  const lumaAt = t => {
+    const x = clamp(t) * (LUMA.length - 1);
+    const i = Math.floor(x);
+    return lerp(LUMA[i], LUMA[Math.min(i+1, LUMA.length-1)], x - i);
+  };
+  const scrimAt = t => lerp(.30, .62, inv(.39, .67, lumaAt(t)));
+
+  /* Chapters are evenly spaced down the page, but the seasons in the film
+     are not: summer is over by a quarter, blossom only arrives at the very
+     end. This bends scroll position onto film position so each chapter sits
+     on its own season. Monotonic, so the year never runs backwards. */
+  const CUE = [[0,0],[.25,.12],[.5,.40],[.75,.67],[1,.93]];
+  const filmAt = s => {
+    for (let i = 1; i < CUE.length; i++){
+      if (s <= CUE[i][0]){
+        const [a,av] = CUE[i-1], [b,bv] = CUE[i];
+        return av + (bv-av) * ((s-a) / (b-a));
+      }
+    }
+    return CUE[CUE.length-1][1];
+  };
+
+  /* ── seasons, placed where they actually happen in the film ──── */
+  const SEASONS = [
+    { key:'summer', name:'Summer', from:0,    to:.25,  hex:'#8CA344' },
+    { key:'autumn', name:'Autumn', from:.25,  to:.545, hex:'#C08B3E' },
+    { key:'winter', name:'Winter', from:.545, to:.80,  hex:'#8FA3AA' },
+    { key:'spring', name:'Spring', from:.80,  to:1.01, hex:'#D79E89' }
+  ];
+  /* a full twelve months, June through May, spread across each season's
+     own span in the film rather than at even intervals */
+  const MONTHS = [
+    ['JUN',0],    ['JUL',.083], ['AUG',.167],
+    ['SEP',.25],  ['OCT',.348], ['NOV',.447],
+    ['DEC',.545], ['JAN',.630], ['FEB',.715],
+    ['MAR',.80],  ['APR',.867], ['MAY',.933]
+  ];
+
+  const hex2rgb = h => [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+  const RGB = Object.fromEntries(SEASONS.map(s => [s.key, hex2rgb(s.hex)]));
+
+  function accentAt(t){
+    for (let i=0;i<SEASONS.length;i++){
+      const s = SEASONS[i];
+      if (t < s.to || i === SEASONS.length-1){
+        const next = SEASONS[Math.min(i+1, SEASONS.length-1)];
+        const blendStart = s.to - (s.to - s.from) * .34;
+        const k = i === SEASONS.length-1 ? 0 : inv(blendStart, s.to, t);
+        const a = RGB[s.key], b = RGB[next.key];
+        return [0,1,2].map(j => Math.round(lerp(a[j], b[j], k)));
+      }
+    }
+    return RGB.summer;
+  }
+  const seasonAt = t => SEASONS.find(s => t < s.to) || SEASONS[SEASONS.length-1];
+
+  /* ── build the year rule ─────────────────────────────────────── */
+  const vertical = () => !matchMedia('(max-width:860px)').matches;
+
+  const monthEls = MONTHS.map(([label, at]) => {
+    const el = document.createElement('span');
+    el.className = 'rule__month'; el.textContent = label;
+    const tick = document.createElement('span');
+    tick.className = 'rule__tick';
+    rTrack.append(el, tick);
+    return { el, tick, at };
+  });
+  const bandEls = SEASONS.map(s => {
+    const b = document.createElement('span');
+    b.className = 'rule__band'; b.style.color = s.hex;
+    rTrack.appendChild(b);
+    return { b, s };
+  });
+
+  function layoutRule(){
+    const v = vertical();
+    monthEls.forEach(({el,tick,at}) => {
+      if (v){ el.style.top=(at*100)+'%'; el.style.left=''; tick.style.top=(at*100)+'%'; tick.style.left=''; }
+      else  { el.style.left=(at*100)+'%'; el.style.top=''; }
+    });
+    bandEls.forEach(({b,s}) => {
+      const a = s.from*100, len = (Math.min(s.to,1)-s.from)*100;
+      if (v){ b.style.top=a+'%'; b.style.height=len+'%'; b.style.left=''; b.style.width=''; }
+      else  { b.style.left=a+'%'; b.style.width=len+'%'; b.style.top=''; b.style.height=''; }
+    });
+  }
+  layoutRule();
+
+  /* ── split headings into rising words ────────────────────────── */
+  document.querySelectorAll('[data-split]').forEach(el => {
+    [...el.childNodes].forEach(node => {
+      const raw  = node.textContent;
+      const text = raw.trim();
+      if (!text){ if (node.nodeType === 3) node.remove(); return; }
+      /* the gap between a text node and the <em> beside it lives in that
+         node's own leading/trailing space — trimming it away runs the two
+         words together, so put it back */
+      const html = (/^\s/.test(raw) ? ' ' : '')
+        + text.split(/[ \t\r\n]+/)
+              .map(w => '<span class="w"><i>' + w + '</i></span>').join(' ')
+        + (/\s$/.test(raw) ? ' ' : '');
+      if (node.nodeType === 1) node.innerHTML = html;
+      else node.replaceWith(document.createRange().createContextualFragment(html));
+    });
+    el.querySelectorAll('.w').forEach((w,i) => w.style.setProperty('--i', i));
+  });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-in'); });
+  }, { rootMargin:'-12% 0px -12% 0px' });
+  panels.forEach(p => io.observe(p));
+
+  /* ── pick the file that fits the screen ──────────────────────── */
+  /* what matters is how wide the film is actually drawn, not the diagonal:
+     a phone renders it 390css wide, so the light cut already exceeds what
+     its screen can show. The ratio is capped at 2 so a dpr-3 phone does not
+     pull the heavy file for pixels it cannot resolve. */
+  const px = innerWidth * Math.min(devicePixelRatio || 1, 2);
+  const conn = navigator.connection;
+  const thrifty = !!conn && (conn.saveData || /(^|-)[23]g$/.test(conn.effectiveType || ''));
+  film.src = (thrifty || px < 1150) ? 'assets/year-960.mp4' : 'assets/year-1280.mp4';
+  film.load();
+
+  /* ── loading readout ─────────────────────────────────────────── */
+  let ready = false;
+  function setReady(){
+    if (ready) return;
+    ready = true;
+    fill.style.width = '100%';
+    document.body.classList.add('is-ready');
+    setTimeout(() => boot.remove(), 1000);
+    kick();
+  }
+  function onProgress(){
+    if (!film.duration || !isFinite(film.duration)) return;
+    let end = 0;
+    for (let i = 0; i < film.buffered.length; i++) end = Math.max(end, film.buffered.end(i));
+    fill.style.width = Math.round(clamp(end / film.duration) * 100) + '%';
+  }
+  film.addEventListener('progress', onProgress);
+  /* open as soon as the first frame can be drawn — waiting for
+     canplaythrough means waiting for the whole film, which is a ten-second
+     black screen on a file this size */
+  film.addEventListener('loadeddata', () => { onProgress(); setReady(); });
+  film.addEventListener('canplay', setReady);
+  film.addEventListener('error', () => { fallback(); setReady(); });
+  setTimeout(setReady, 8000);
+
+  function fallback(){
+    if (film.dataset.fallback) return;
+    film.dataset.fallback = '1';
+    seekable = false; film.loop = true;
+    film.play().catch(() => {});
+  }
+
+  /* iOS wants one gesture before it lets anyone touch currentTime */
+  addEventListener('touchstart', () => {
+    film.play().then(() => film.pause()).catch(() => {});
+  }, { once:true, passive:true });
+
+  /* ── scrub ───────────────────────────────────────────────────── */
+  let duration = 0, seekable = false, wanted = 0, shown = 0;
+  film.addEventListener('loadedmetadata', () => {
+    duration = film.duration || 0;
+    const s = document.getElementById('filmStats');
+    if (s && duration) s.textContent = 'Scroll film · ' + Math.round(duration * 60) + ' frames · 60 fps';
+    kick();
+  });
+  film.addEventListener('loadeddata', () => { seekable = true; kick(); });
+
+  let vh = innerHeight, span = 1, scrolled = false, running = false, hold = 0, last = 0;
+  /* panel geometry is cached: reading getBoundingClientRect inside the rAF
+     loop forces a layout every frame, which costs more than the seek does */
+  let geom = [];
+  const measure = () => {
+    vh = innerHeight;
+    span = Math.max(1, track.offsetHeight - vh);
+    geom = panels.map(p => ({ el:p, mid: p.offsetTop + p.offsetHeight / 2 }));
+  };
+  measure();
+
+  function kick(){
+    hold = 14;
+    if (!running){ running = true; last = performance.now(); requestAnimationFrame(frame); }
+  }
+  addEventListener('scroll', kick, { passive:true });
+  addEventListener('resize', () => { measure(); layoutRule(); kick(); }, { passive:true });
+
+  let lastMonth = -1, lastSeason = '';
+
+  function frame(now){
+    const dt = Math.min(64, (now - last) || 16.7); last = now;
+
+    if ((!seekable || !duration) && film.readyState >= 1 &&
+        isFinite(film.duration) && film.duration > 0){
+      duration = film.duration; seekable = true;
+    }
+
+    const y = scrollY || pageYOffset;
+    const p = filmAt(clamp(y / span));
+    root.style.setProperty('--scroll', p.toFixed(4));
+
+    if (!scrolled && y > 40){ scrolled = true; document.body.classList.add('is-scrolled'); }
+
+    root.style.setProperty('--scrim', scrimAt(p).toFixed(3));
+
+    const [r,g,b] = accentAt(p);
+    root.style.setProperty('--accent', 'rgb(' + r + ' ' + g + ' ' + b + ')');
+
+    const pct = (p*100).toFixed(2) + '%';
+    if (vertical()){ marker.style.top = pct; marker.style.left = ''; }
+    else           { marker.style.left = pct; marker.style.top = ''; }
+
+    let mi = 0;
+    for (let i = 0; i < monthEls.length; i++) if (p >= monthEls[i].at) mi = i;
+    if (mi !== lastMonth){
+      monthEls.forEach((m,i) => m.el.classList.toggle('is-now', i === mi));
+      lastMonth = mi;
+    }
+    const se = seasonAt(p);
+    if (se.name !== lastSeason){ rSeason.textContent = se.name; lastSeason = se.name; }
+
+    /* hand the frame to whichever chapter is nearest the middle, so two
+       chapters never sit on top of each other on the way past */
+    for (let i = 0; i < geom.length; i++){
+      const d = ((geom[i].mid - y) - vh / 2) / vh;
+      const near = clamp(1 - (Math.abs(d) - 0.10) / 0.34).toFixed(3);
+      if (geom[i].last !== near){
+        geom[i].el.style.setProperty('--near', near);
+        geom[i].last = near;
+      }
+    }
+
+    /* damped follower, frame-rate independent, so 60Hz and 144Hz feel alike */
+    let settled = true;
+    if (seekable && duration){
+      wanted = p * (duration - 1/60);
+      if (calm) shown = wanted;
+      else {
+        const k = 1 - Math.pow(1 - .16, dt / 16.667);
+        shown += (wanted - shown) * k;
+        if (Math.abs(wanted - shown) < .002) shown = wanted; else settled = false;
+      }
+      /* one seek in flight at a time — queued seeks cancel each other out
+         and the film falls behind the scroll */
+      if (!film.seeking && Math.abs(film.currentTime - shown) > 1/120){
+        film.currentTime = shown;
+      }
+      if (Math.abs(film.currentTime - wanted) > 1/90) settled = false;
+    }
+
+    if (settled && hold-- <= 0){ running = false; return; }
+    requestAnimationFrame(frame);
+  }
+
+  addEventListener('pageshow', () => { measure(); kick(); });
+  /* a hidden tab stops rAF, so the film can be left behind the scroll
+     position — pick it back up the moment the tab is looked at again */
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden){ measure(); kick(); }
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite",
+ "name":"The house holds still. The year does not.",
+ "description":"A scroll film: one courtyard and twelve months in a single continuous shot.",
+ "inLanguage":"en"}
+</script>
+
+</body>
+</html>

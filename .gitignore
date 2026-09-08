@@ -1,0 +1,10 @@
+# working screenshots — regenerate with scrub-test.py
+shots/
+
+# local dev server config
+.claude/
+
+# generated QA harness
+qa.html
+qa/
+qa_rects.json
