@@ -184,3 +184,9 @@ python encode-final.py
 If the film changes, recompute the `LUMA` array and the `SEASONS` boundaries
 in `index.html`, or the scrim and the labels will drift out of step with the
 picture.
+
+## Tests
+
+`python -m pytest -q tests` serves the page locally, opens it in Chromium and checks
+that the headline shows and no script error is thrown — on load and while scrolling.
+Needs `pip install pytest playwright` and `python -m playwright install chromium`.
