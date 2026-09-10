@@ -1,5 +1,8 @@
 # The house holds still. The year does not.
 
+<!-- badges -->
+[![CI](https://github.com/YuraItDeveloper14/seasons-scroll/actions/workflows/check.yml/badge.svg)](https://github.com/YuraItDeveloper14/seasons-scroll/actions/workflows/check.yml) [![License](https://img.shields.io/github/license/YuraItDeveloper14/seasons-scroll?color=blue)](LICENSE) [![Last commit](https://img.shields.io/github/last-commit/YuraItDeveloper14/seasons-scroll)](https://github.com/YuraItDeveloper14/seasons-scroll/commits)
+
 A scroll film: one courtyard in a single continuous shot, with twelve months
 passing through it. Scroll position drives the position in the film.
 
